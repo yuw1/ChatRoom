@@ -1,3 +1,5 @@
+package Client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -86,7 +88,7 @@ public class Client {
             Socket s1 = new Socket("127.0.0.1",2056);
             DataInputStream dis = new DataInputStream(s1.getInputStream());
             DataOutputStream dos = new DataOutputStream(s1.getOutputStream());
-            Thread mrc = new MyClientReader(dis,output);
+            Thread mrc = new ClientReader(dis,output);
             //Thread mcw = new MyClientWriter(dos,input);
             mrc.start();
             //mcw.start();
@@ -122,24 +124,4 @@ public class Client {
         }
 
 
-}
-class MyClientReader extends Thread{
-    private DataInputStream dis;
-    private JTextArea output;
-    public MyClientReader(DataInputStream dis, JTextArea output){
-        this.dis=dis;
-        this.output=output;
-    }
-    public void run(){
-        String msg;
-        try {
-            while (true){
-                msg = dis.readUTF();
-                output.append(msg+"\n");
-            }
-        }catch (IOException e){
-            System.out.println(e);
-        }
-
-    }
 }
